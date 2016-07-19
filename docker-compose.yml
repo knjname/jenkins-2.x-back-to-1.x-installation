@@ -1,0 +1,24 @@
+version: "2"
+
+services:
+  default_jenkins:
+    image: jenkins:2.7.1
+    ports:
+      - 8080:8080
+
+  init_skipped_jenkins:
+    image: jenkins:2.7.1
+    ports:
+      - 8081:8080
+    volumes:
+      - ./jenkins.install.InstallUtil.lastExecVersion:/usr/share/jenkins/ref/jenkins.install.InstallUtil.lastExecVersion:ro
+      # Maybe this won't affect anything though it was documented in https://github.com/jenkinsci/docker/blob/master/README.md.
+      # - ./jenkins.install.UpgradeWizard.state:/usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state:ro
+
+  security_disabled_jenkins:
+    image: jenkins:2.7.1
+    ports:
+      - 8082:8080
+    volumes:
+      - ./disableSecurity.groovy:/usr/share/jenkins/ref/init.groovy.d/disableSecurity.groovy
+ 
